@@ -8,7 +8,7 @@ namespace RealEstateApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private List<Category> categories = new List<Category>()
+        private static List<Category> categories = new List<Category>()
         {
             new Category { Id = 0, Name = "Apartment", ImageUrl = "apartment.png" },
             new Category { Id = 1, Name = "Commercial", ImageUrl = "commercial.png" },
@@ -18,6 +18,12 @@ namespace RealEstateApi.Controllers
         public IEnumerable<Category> Get()
         {
             return categories;
+        }
+
+        [HttpPost]
+        public void Post([FromBody] Category category)
+        {
+            categories.Add(category);
         }
     }
 }
