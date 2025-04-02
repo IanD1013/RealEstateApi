@@ -31,5 +31,11 @@ namespace RealEstateApi.Controllers
         {
             categories[id] = category;
         }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            categories.RemoveAt(id);
+        }
     }
 }
