@@ -44,7 +44,7 @@ namespace RealEstateApi.Controllers
             }
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"])); // convert secret to byte array
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);   // encrypt the secret key
-            var claims = new[]
+            var claims = new[]  // specify the payload claims
             {
                 new Claim(ClaimTypes.Email, user.Email)
             };
