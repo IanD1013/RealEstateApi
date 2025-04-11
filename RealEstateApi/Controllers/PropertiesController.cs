@@ -12,6 +12,16 @@ namespace RealEstateApi.Controllers
     {
         ApiDbContext _dbContext = new ApiDbContext();
 
+        [HttpGet("PropertyList")]                          // api/Properties/PropertyList
+        // [HttpGet("{categoryId}")]                       // api/Properties/1
+        [Authorize]
+        public IActionResult GetProperties(int categoryId) // api/Properties?categoryId=1
+        {
+            var propertiesResult = _dbContext.Properties.Where(c => c.CategoryId == categoryId);
+            if (propertiesResult == null) return NotFound();
+            return Ok(propertiesResult);
+        }
+
         [HttpPost]
         [Authorize]
         public IActionResult Post([FromBody] Property property)
