@@ -53,5 +53,24 @@ namespace RealEstateApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var propertyResult = _dbContext.Properties.FirstOrDefault(p => p.Id == id);
+            if (propertyResult == null) return NotFound();
+
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
+            if (user == null) return NotFound();
+            if (propertyResult.UserId == user.Id)
+            {
+                _dbContext.Properties.Remove(propertyResult);
+                _dbContext.SaveChanges();
+                return Ok("Record deleted successfully");
+            }
+            return BadRequest();
+        }
     }
 }
