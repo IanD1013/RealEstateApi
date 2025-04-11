@@ -22,6 +22,15 @@ namespace RealEstateApi.Controllers
             return Ok(propertiesResult);
         }
 
+        [HttpGet("PropertyDetail")]
+        [Authorize]
+        public IActionResult GetPropertyDetail(int id) 
+        {
+            var propertiesResult = _dbContext.Properties.FirstOrDefault(p => p.Id == id);
+            if (propertiesResult == null) return NotFound();
+            return Ok(propertiesResult);
+        }
+
         [HttpPost]
         [Authorize]
         public IActionResult Post([FromBody] Property property)
